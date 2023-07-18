@@ -1,0 +1,1 @@
+﻿CatalogTypeName,CatalogBrandName,Description,Name,Price,PictureFileName,availablestock,onreorder
