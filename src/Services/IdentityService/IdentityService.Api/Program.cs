@@ -28,3 +28,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+app.RegisterWithConsul(builder.Services);
