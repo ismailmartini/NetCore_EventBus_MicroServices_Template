@@ -1,20 +1,12 @@
-using IdentityService.Api.Extensions;
-using IdentityService.Api.Services;
-using Microsoft.AspNetCore.Hosting.Server.Features;
-using Microsoft.AspNetCore.Hosting.Server;
-using System.Net;
+using Ocelot.DependencyInjection;
+using Ocelot.Middleware;
+using Ocelot.Provider.Consul;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
-builder.Services.AddScoped<IIdentityService, IdentityService.Api.Services.IdentityService>();
-
-
-builder.Services.ConfigureConsul();
-
-
-
+builder.Configuration.AddJsonFile("Configurations/ocelot.json", optional: false, reloadOnChange: true);
+builder.Services.AddOcelot(builder.Configuration).AddConsul();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -30,12 +22,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseOcelot().Wait();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
 
-app.Start();
-app.RegisterWithConsul(builder.Services);
-app.WaitForShutdown();
+app.Run();

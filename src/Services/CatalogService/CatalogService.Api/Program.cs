@@ -4,6 +4,8 @@
 
 using CatalogService.Api.Extensions;
 using CatalogService.Api.Infrastructure.Context;
+using Microsoft.AspNetCore.Hosting.Server.Features;
+using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.EntityFrameworkCore;
  
 
@@ -17,7 +19,7 @@ var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<CatalogContext>(options => options.UseSqlServer(connectionString));
- 
+
 //builder.Services.AddDbContext<CatalogContext>(x => x.UseSqlServer(connectionString));
 
 
@@ -27,6 +29,10 @@ builder.Services.AddDbContext<CatalogContext>(options => options.UseSqlServer(co
 
 
 // Add services to the container.
+
+builder.Services.ConfigureConsul();
+
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -51,11 +57,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+ 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
-
-app.Run();
+app.Start();
+app.RegisterWithConsul(builder.Services);
+app.WaitForShutdown();

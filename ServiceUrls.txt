@@ -1,0 +1,12 @@
+
+NotificationService => Console App
+Web.ApiGateway      ->Http://localhost:5000
+PaymentService.Api  ->Http://localhost:5001
+OrderService.Api    ->Http://localhost:5002
+BasketService.Api   ->Http://localhost:5003
+CatalogService.Api  ->Http://localhost:5004
+IdentityService.Api ->Http://localhost:5005
+
+
+
+ docker run -d -p 8500:8500 -p 8600:8600/tcp -p 8600:8600/udp --name=c_sonsul consul:1.15.0
