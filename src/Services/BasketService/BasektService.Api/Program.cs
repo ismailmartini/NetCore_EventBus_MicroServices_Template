@@ -17,7 +17,7 @@ builder.Services.ConfigureAuth();
 builder.Services.ConfigureRedis();
 builder.Services.AddEventBusService();
 builder.Services.AddHttpContextAccessor();  
-builder.Services.AddScoped<IBasketRepository,RedisBasketRepository>();
+builder.Services.AddTransient<IBasketRepository,RedisBasketRepository>();
 builder.Services.AddTransient<IIdentityService, BasketService.Api.Core.Application.Services.IdentityService>();
 
 
