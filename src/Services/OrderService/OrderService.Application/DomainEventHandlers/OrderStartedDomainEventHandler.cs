@@ -14,8 +14,7 @@ namespace OrderService.Application.DomainEventHandlers
             this.buyerRepository = buyerRepository;
         }
 
-
-
+         
 
 
         public async Task Handle(OrderStartedDomainEvent orderStartedEvent, CancellationToken cancellationToken)
