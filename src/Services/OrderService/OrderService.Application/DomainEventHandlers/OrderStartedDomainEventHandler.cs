@@ -16,8 +16,6 @@ namespace OrderService.Application.DomainEventHandlers
 
 
 
-
-
         public async Task Handle(OrderStartedDomainEvent orderStartedEvent, CancellationToken cancellationToken)
         {
 
